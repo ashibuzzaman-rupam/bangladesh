@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore Bangladesh — Travel Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #006a4e;
+  --red: #f42a41;
+  --gold: #d4a843;
+  --cream: #fdf6ec;
+  --dark: #1a1208;
+  --muted: #6b5c3e;
+  --card-bg: #fffdf8;
+  --border: rgba(0,106,78,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background: var(--green);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Animated water/river bg */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(0,180,100,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,80,180,0.2) 0%, transparent 60%),
+    linear-gradient(160deg, #004d38 0%, #006a4e 40%, #00533d 100%);
+}
+
+/* Floating circle pattern — Bangladesh flag inspired */
+.hero-circle {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  border: 2px solid rgba(244,42,65,0.15);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotateSlow 30s linear infinite;
+}
+.hero-circle::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(244,42,65,0.1);
+}
+.hero-circle::after {
+  content: '';
+  position: absolute;
+  inset: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(244,42,65,0.08);
+}
+@keyframes rotateSlow { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Dot pattern */
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Sun/moon */
+.hero-sun {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(244,42,65,0.9), rgba(200,20,40,0.7));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+  box-shadow: 0 0 60px rgba(244,42,65,0.4), 0 0 120px rgba(244,42,65,0.15);
+  animation: pulseSun 4s ease-in-out infinite alternate;
+}
+@keyframes pulseSun {
+  from { box-shadow: 0 0 60px rgba(244,42,65,0.4), 0 0 120px rgba(244,42,65,0.15); }
+  to { box-shadow: 0 0 80px rgba(244,42,65,0.6), 0 0 160px rgba(244,42,65,0.25); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 9vw, 100px);
+  color: white;
+  line-height: 0.95;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.hero-title span {
+  color: var(--red);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 3vw, 26px);
+  color: rgba(255,255,255,0.7);
+  font-style: italic;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--red);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.hero-cta:hover {
+  background: white;
+  color: var(--red);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: bounce 2s ease-in-out infinite;
+}
+.hero-scroll::after {
+  content: '↓';
+  display: block;
+  text-align: center;
+  margin-top: 6px;
+  font-size: 18px;
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  background: var(--dark);
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.stat-item {
+  flex: 1;
+  min-width: 160px;
+  padding: 22px 30px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+/* ===== SECTION STYLES ===== */
+section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  color: var(--dark);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.section-desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ===== DESTINATIONS ===== */
+#destinations { padding-top: 80px; }
+.dest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.dest-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+.dest-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,106,78,0.12);
+  border-color: var(--green);
+}
+
+.dest-img {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.dest-img-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+.dest-card:hover .dest-img-inner { transform: scale(1.06); }
+
+.dest-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.dest-body { padding: 24px; }
+.dest-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+.dest-region {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.dest-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+.dest-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.dest-tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(0,106,78,0.08);
+  color: var(--green);
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+.dest-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.dest-rating { color: var(--gold); font-size: 14px; }
+.dest-season { font-size: 12px; color: var(--muted); }
+
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--green);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.add-btn:hover { background: var(--dark); }
+.add-btn.added { background: var(--gold); color: var(--dark); }
+
+/* ===== TRIP PLANNER ===== */
+#planner-section {
+  background: var(--dark);
+  max-width: 100%;
+  padding: 80px 20px;
+}
+#planner-section .inner { max-width: 1200px; margin: 0 auto; }
+#planner-section .section-title { color: white; }
+#planner-section .section-label { color: var(--gold); }
+#planner-section .section-desc { color: rgba(255,255,255,0.5); }
+
+.planner-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  margin-top: 48px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .planner-layout { grid-template-columns: 1fr; }
+}
+
+/* Trip form */
+.trip-form {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+.form-group input, .form-group select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+  color: white;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--green); }
+.form-group select option { background: #1a1208; }
+
+.form-section-title {
+  font-family: 'Playfair Display', serif;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Selected destinations in planner */
+.selected-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; min-height: 60px; }
+.selected-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 2px;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+.selected-emoji { font-size: 24px; }
+.selected-info { flex: 1; }
+.selected-name { color: white; font-size: 14px; font-weight: 500; }
+.selected-region { color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.selected-days {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+}
+.days-input {
+  width: 48px;
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2px;
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  outline: none;
+}
+.remove-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.remove-btn:hover { color: var(--red); }
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: rgba(255,255,255,0.2);
+  font-size: 14px;
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--red);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+.generate-btn:hover { background: #d42035; transform: translateY(-1px); }
+
+/* Trip Summary Panel */
+.trip-summary {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 30px;
+  position: sticky;
+  top: 20px;
+}
+.summary-title {
+  font-family: 'Playfair Display', serif;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+}
+.summary-row span:last-child { color: white; font-weight: 500; }
+.summary-total {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(0,106,78,0.2);
+  border: 1px solid rgba(0,106,78,0.3);
+  border-radius: 2px;
+}
+.summary-total-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.summary-total-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-top: 4px;
+}
+.summary-budget-range { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+/* ===== ITINERARY OUTPUT ===== */
+#itinerary-section {
+  max-width: 100%;
+  background: var(--cream);
+  padding: 80px 20px;
+  display: none;
+}
+#itinerary-section .inner { max-width: 1200px; margin: 0 auto; }
+
+.itinerary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.day-block {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+  position: relative;
+}
+.day-block::before {
+  content: '';
+  position: absolute;
+  left: 39px;
+  top: 60px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.day-block:last-child::before { display: none; }
+
+.day-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+.day-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 3px solid var(--cream);
+  box-shadow: 0 0 0 2px var(--green);
+  flex-shrink: 0;
+}
+.day-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.day-content {
+  padding: 20px 0 40px 30px;
+}
+.day-dest-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--dark);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.day-dest-emoji { font-size: 28px; margin-right: 8px; }
+.day-activities { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.activity {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  background: white;
+  border-left: 3px solid var(--green);
+  border-radius: 0 4px 4px 0;
+}
+.activity-time { font-size: 11px; color: var(--muted); letter-spacing: 1px; width: 55px; flex-shrink: 0; margin-top: 2px; }
+.activity-text { font-size: 14px; color: var(--dark); line-height: 1.5; }
+.activity-text strong { color: var(--green); }
+.food-tip {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(212,168,67,0.1);
+  border: 1px solid rgba(212,168,67,0.3);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* ===== TIPS ===== */
+#tips-section { padding: 80px 20px; }
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 48px;
+}
+.tip-card {
+  padding: 28px;
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--green);
+  border-radius: 2px;
+  transition: transform 0.2s;
+}
+.tip-card:hover { transform: translateY(-4px); }
+.tip-icon { font-size: 32px; margin-bottom: 14px; }
+.tip-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+.tip-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 13px;
+}
+footer span { color: var(--red); }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.filter-btn {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 2px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+/* Season badge colors */
+.oct-mar { background: rgba(0,106,78,0.1); color: var(--green); }
+.all-year { background: rgba(212,168,67,0.1); color: #a07830; }
+.mar-jun { background: rgba(244,42,65,0.08); color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-circle"></div>
+  <div class="hero-sun"></div>
+  <div class="hero-content">
+    <div class="hero-label">Discover the Beauty of</div>
+    <h1 class="hero-title">Bangla<span>desh</span></h1>
+    <p class="hero-sub">Land of Rivers, Culture & Wonder</p>
+    <a href="#destinations" class="hero-cta">Plan Your Journey</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">700+</div><div class="stat-label">Rivers</div></div>
+  <div class="stat-item"><div class="stat-num">62</div><div class="stat-label">Districts</div></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">UNESCO Sites</div></div>
+  <div class="stat-item"><div class="stat-num">120km</div><div class="stat-label">Longest Beach</div></div>
+  <div class="stat-item"><div class="stat-num">6,017km²</div><div class="stat-label">Sundarbans</div></div>
+</div>
+
+<!-- DESTINATIONS -->
+<section id="destinations">
+  <div class="section-label">Where to Go</div>
+  <h2 class="section-title">Must-Visit<br>Destinations</h2>
+  <p class="section-desc">From the world's largest mangrove forest to the longest natural sea beach — Bangladesh is full of breathtaking surprises.</p>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+    <button class="filter-btn" data-filter="history">🏛️ History</button>
+    <button class="filter-btn" data-filter="beach">🏖️ Beach</button>
+    <button class="filter-btn" data-filter="hill">⛰️ Hills</button>
+    <button class="filter-btn" data-filter="city">🏙️ City</button>
+  </div>
+
+  <div class="dest-grid" id="destGrid"></div>
+</section>
+
+<!-- PLANNER -->
+<div id="planner-section">
+  <div class="inner">
+    <div class="section-label">Build Your Adventure</div>
+    <h2 class="section-title">Trip Planner</h2>
+    <p class="section-desc">Add destinations, set your travel dates and style — we'll generate your personalized itinerary.</p>
+
+    <div class="planner-layout">
+      <div class="trip-form">
+        <div class="form-section-title">Trip Details</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" id="startDate">
+          </div>
+          <div class="form-group">
+            <label>Travel Style</label>
+            <select id="travelStyle">
+              <option value="budget">Budget Traveler 💰</option>
+              <option value="comfort" selected>Comfort Seeker 🌟</option>
+              <option value="luxury">Luxury Explorer 💎</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Travelers</label>
+            <select id="travelers">
+              <option>Solo</option>
+              <option selected>2 People</option>
+              <option>Family (4)</option>
+              <option>Group (6+)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Transport</label>
+            <select id="transport">
+              <option>Local Bus + Train</option>
+              <option selected>Mixed (Bus/Launch/AC)</option>
+              <option>Private Car</option>
+              <option>Fly Where Possible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section-title">Your Destinations</div>
+        <div class="selected-list" id="selectedList">
+          <div class="empty-state" id="emptyState">← Add destinations from the cards above</div>
+        </div>
+        <button class="generate-btn" id="generateBtn" onclick="generateItinerary()">✦ Generate My Itinerary</button>
+      </div>
+
+      <div class="trip-summary">
+        <div class="summary-title">Trip Summary</div>
+        <div class="summary-row"><span>Destinations</span><span id="sumDest">0</span></div>
+        <div class="summary-row"><span>Total Days</span><span id="sumDays">0</span></div>
+        <div class="summary-row"><span>Travel Style</span><span id="sumStyle">Comfort</span></div>
+        <div class="summary-row"><span>Season Tip</span><span id="sumSeason">—</span></div>
+
+        <div class="summary-total">
+          <div class="summary-total-label">Estimated Budget (BDT)</div>
+          <div class="summary-total-val" id="sumBudget">—</div>
+          <div class="summary-budget-range" id="sumBudgetNote">Add destinations to estimate</div>
+        </div>
+
+        <div style="margin-top:20px; padding:16px; background:rgba(244,42,65,0.08); border:1px solid rgba(244,42,65,0.15); border-radius:2px;">
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px;">Best Time to Visit</div>
+          <div style="color:white;font-size:14px;line-height:1.6;">🌤️ <strong style="color:var(--gold)">Oct – Mar</strong> — Dry season, perfect weather<br>🌧️ Jun – Sep — Monsoon (lush but rainy)<br>🌸 Mar – May — Hot, good for hills</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ITINERARY OUTPUT -->
+<div id="itinerary-section">
+  <div class="inner">
+    <div class="itinerary-header">
+      <div>
+        <div class="section-label">Your Personalized Plan</div>
+        <h2 class="section-title" id="itinTitle">Bangladesh Adventure</h2>
+        <p class="section-desc" id="itinSubtitle"></p>
+      </div>
+      <button class="add-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<section id="tips-section">
+  <div class="section-label">Essential Know-How</div>
+  <h2 class="section-title">Traveler's Tips</h2>
+  <p class="section-desc">Everything you need for a smooth, safe, and unforgettable Bangladesh experience.</p>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🛂</div>
+      <div class="tip-title">Visa & Entry</div>
+      <div class="tip-text">Most nationalities get visa on arrival at Dhaka's Hazrat Shahjalal International Airport. Apply online via the e-Visa portal for hassle-free entry. Carry USD for fees.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💰</div>
+      <div class="tip-title">Currency</div>
+      <div class="tip-text">Bangladesh Taka (BDT). 1 USD ≈ 110 BDT. Exchange at banks or certified exchange booths. Avoid street exchangers. ATMs widely available in cities.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🚢</div>
+      <div class="tip-title">Getting Around</div>
+      <div class="tip-text">Rocket Steamers on Buriganga River are iconic. CNG auto-rickshaws in cities. Biman Bangladesh for domestic flights. Train network connects major cities.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🍛</div>
+      <div class="tip-title">Food & Safety</div>
+      <div class="tip-text">Try hilsa fish, biryani, panta bhat, and mishti doi. Drink bottled water. Street food is delicious — go where locals eat. Carry hand sanitizer.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">👗</div>
+      <div class="tip-title">Dress Code</div>
+      <div class="tip-text">Bangladesh is conservative. Women should cover shoulders and knees, especially at mosques. Men in shorts are fine at beaches. Carry a scarf/shawl.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <div class="tip-title">Connectivity</div>
+      <div class="tip-text">Get a local SIM (Grameenphone or Robi) at the airport — cheap and fast 4G. WhatsApp and Google Maps work great. Download offline maps before remote trips.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🌡️</div>
+      <div class="tip-title">Health</div>
+      <div class="tip-text">No major vaccinations required but Hepatitis A/B and Typhoid recommended. Pack mosquito repellent. Nearest hospitals: Dhaka Medical, Square Hospital Dhaka.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🤝</div>
+      <div class="tip-title">Local Etiquette</div>
+      <div class="tip-text">Bangladeshis are incredibly hospitable — accept tea when offered! Remove shoes before entering homes and mosques. Ask before photographing people.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Made with <span>♥</span> for Bangladesh travelers · Plan responsibly · Respect local culture
+</footer>
+
+<script>
+// ===== DATA =====
+const destinations = [
+  {
+    id: 'cox', name: "Cox's Bazar", region: "Chittagong Division",
+    emoji: "🏖️", badge: "Most Popular",
+    desc: "The world's longest natural sea beach stretches 120km of golden sand. Watch the sunrise over the Bay of Bengal.",
+    tags: ["beach", "sunset", "seafood", "snorkeling"],
+    categories: ["beach", "nature"],
+    rating: "⭐⭐⭐⭐⭐", season: "Oct – Mar",
+    bg: "linear-gradient(135deg, #0077b6, #48cae4)",
+    costPerDay: { budget: 1500, comfort: 3500, luxury: 8000 },
+    activities: [
+      { time: "6:00 AM", text: "<strong>Sunrise walk</strong> on Laboni Beach — the longest natural sea beach in the world (120km!)" },
+      { time: "9:00 AM", text: "<strong>Himchari National Park</strong> — hike to the waterfall and enjoy panoramic ocean views" },
+      { time: "12:00 PM", text: "Lunch at a beachfront restaurant — try fresh <strong>grilled fish and lobster</strong>" },
+      { time: "3:00 PM", text: "<strong>Inani Beach</strong> — explore rocky coral formations and crystal clear water" },
+      { time: "6:00 PM", text: "<strong>Sunset at Kolatoli Beach</strong> — the sky turns spectacular shades of orange and pink" },
+    ],
+    food: "🍤 Must try: Shutki (dried fish), fresh coconut, barbecued crab at Kalatoli market stalls"
+  },
+  {
+    id: 'sundarbans', name: "Sundarbans", region: "Khulna Division",
+    emoji: "🐅", badge: "UNESCO Heritage",
+    desc: "The world's largest mangrove forest, home to the Royal Bengal Tiger. A UNESCO World Heritage Site unlike anywhere on earth.",
+    tags: ["wildlife", "nature", "boat tour", "tiger"],
+    categories: ["nature"],
+    rating: "⭐⭐⭐⭐⭐", season: "Nov – Feb",
+    bg: "linear-gradient(135deg, #1b4332, #52b788)",
+    costPerDay: { budget: 2500, comfort: 5000, luxury: 12000 },
+    activities: [
+      { time: "7:00 AM", text: "<strong>Boat safari</strong> through narrow creeks watching for Royal Bengal Tigers and spotted deer" },
+      { time: "10:00 AM", text: "<strong>Kotka Wildlife Sanctuary</strong> — spot crocodiles, monkeys, and hundreds of bird species" },
+      { time: "1:00 PM", text: "Lunch on the boat — enjoy freshly caught <strong>Sundarbans fish curry</strong>" },
+      { time: "3:00 PM", text: "<strong>Hiron Point (Nilkamal)</strong> — the most popular tiger spotting area, walk the forest trails" },
+      { time: "6:00 PM", text: "Evening on the river — watch <strong>dolphins</strong> play at sunset" },
+    ],
+    food: "🐟 Must try: Sundarbani hilsa, forest honey, crab curry — all local specialties"
+  },
+  {
+    id: 'sylhet', name: "Sylhet", region: "Sylhet Division",
+    emoji: "🍃", badge: "Tea Capital",
+    desc: "Rolling hills blanketed in emerald tea gardens, haor wetlands teeming with migratory birds, and spiritual Sufi shrines.",
+    tags: ["tea gardens", "haor", "waterfalls", "shrines"],
+    categories: ["nature", "history"],
+    rating: "⭐⭐⭐⭐½", season: "Oct – Mar",
+    bg: "linear-gradient(135deg, #2d6a4f, #95d5b2)",
+    costPerDay: { budget: 1200, comfort: 2800, luxury: 6000 },
+    activities: [
+      { time: "7:00 AM", text: "<strong>Srimangal Tea Gardens</strong> — walk through endless rows of tea plants as workers pick leaves at dawn" },
+      { time: "10:00 AM", text: "<strong>Seven Colour Tea</strong> at Nilkantha Tea Cabin — a Srimangal specialty you won't find anywhere else" },
+      { time: "1:00 PM", text: "<strong>Madhabpur Lake</strong> — a stunning haor lake surrounded by tea gardens and water lilies" },
+      { time: "3:00 PM", text: "<strong>Lawachara National Park</strong> — spot hoolock gibbons and rare birds in the rainforest" },
+      { time: "6:00 PM", text: "<strong>Hazrat Shah Jalal Shrine</strong> in Sylhet city — one of Bangladesh's most sacred Sufi sites" },
+    ],
+    food: "☕ Must try: Seven-layer tea, pan (betel leaf), hilsa from Sylhet's rivers"
+  },
+  {
+    id: 'dhaka', name: "Dhaka", region: "Dhaka Division",
+    emoji: "🕌", badge: "Capital City",
+    desc: "A city of 20 million souls — ancient Mughal mosques, vibrant old town, incredible street food, and buzzing markets.",
+    tags: ["Mughal", "old city", "street food", "museums"],
+    categories: ["city", "history"],
+    rating: "⭐⭐⭐⭐", season: "All Year",
+    bg: "linear-gradient(135deg, #6d4c41, #d7a86e)",
+    costPerDay: { budget: 1000, comfort: 2500, luxury: 7000 },
+    activities: [
+      { time: "8:00 AM", text: "<strong>Lalbagh Fort</strong> — a stunning 17th-century Mughal fort with lush gardens and history" },
+      { time: "10:30 AM", text: "<strong>Ahsan Manzil (Pink Palace)</strong> — the opulent palace of the Nawabs of Dhaka, now a museum" },
+      { time: "12:30 PM", text: "<strong>Old Dhaka rickshaw tour</strong> — navigate narrow lanes of Shankhari Bazar and Chowk Bazar" },
+      { time: "3:00 PM", text: "<strong>Star Mosque (Tara Masjid)</strong> — breathtaking blue tile work and Chinese porcelain inlays" },
+      { time: "6:00 PM", text: "<strong>Iftar at Chowk Bazar</strong> — the legendary street food market that runs for centuries (evening version all year)" },
+    ],
+    food: "🍖 Must try: Bakarkhani bread, Mutton Biryani at Haji Biriyani (Old Dhaka's 70-year-old institution)"
+  },
+  {
+    id: 'rangamati', name: "Rangamati", region: "Chittagong Hill Tracts",
+    emoji: "⛰️", badge: "Lake District",
+    desc: "The Lake District of Bangladesh — Kaptai Lake reflects forested hills, while indigenous communities maintain ancient traditions.",
+    tags: ["lake", "tribal culture", "boat", "hills"],
+    categories: ["nature", "hill"],
+    rating: "⭐⭐⭐⭐½", season: "Oct – May",
+    bg: "linear-gradient(135deg, #023e8a, #90e0ef)",
+    costPerDay: { budget: 1300, comfort: 3000, luxury: 6500 },
+    activities: [
+      { time: "8:00 AM", text: "<strong>Kaptai Lake boat tour</strong> — glide through the largest man-made lake in Bangladesh at dawn" },
+      { time: "10:30 AM", text: "<strong>Hanging Bridge</strong> — Rangamati's iconic suspension footbridge over the lake is unmissable" },
+      { time: "1:00 PM", text: "<strong>Tribal Cultural Institute Museum</strong> — learn the rich heritage of Chakma, Marma, and Tripura peoples" },
+      { time: "3:00 PM", text: "<strong>Shuvolong Waterfall</strong> — accessible by boat, plunges dramatically into a forest pool" },
+      { time: "5:30 PM", text: "<strong>Sunset at Raja Bari</strong> — the traditional palace of the Chakma Raja, overlooking the lake" },
+    ],
+    food: "🌿 Must try: Bamboo shoot curry, indigenous style grilled fish, traditional rice wine (mod)"
+  },
+  {
+    id: 'bagerhat', name: "Bagerhat", region: "Khulna Division",
+    emoji: "🕌", badge: "UNESCO Heritage",
+    desc: "The ancient mosque city of Bagerhat, a UNESCO World Heritage Site. The 15th-century Sixty Dome Mosque is extraordinary.",
+    tags: ["UNESCO", "Mughal", "mosque", "history"],
+    categories: ["history"],
+    rating: "⭐⭐⭐⭐⭐", season: "Oct – Mar",
+    bg: "linear-gradient(135deg, #7b3f00, #d4a843)",
+    costPerDay: { budget: 800, comfort: 1800, luxury: 4000 },
+    activities: [
+      { time: "8:00 AM", text: "<strong>Sixty Dome Mosque (Shat Gambuj Masjid)</strong> — one of the largest mosques in the Indian subcontinent, built 1459 AD" },
+      { time: "10:00 AM", text: "<strong>Singair Mosque & Khan Jahan Ali's Tomb</strong> — the saint who founded Bagerhat, revered by all faiths" },
+      { time: "12:00 PM", text: "<strong>Nine Dome Mosque</strong> — a perfect example of Sultanate period architecture surrounded by ponds" },
+      { time: "2:00 PM", text: "<strong>Bagerhat Museum</strong> — artifacts, inscriptions, and the full story of this lost city" },
+      { time: "4:00 PM", text: "<strong>Thakur Dighi Pond</strong> — watch crocodiles that are sacred to locals, fed for centuries" },
+    ],
+    food: "🦀 Must try: Khulna-style chingri (prawn) curry, fresh river fish, and golden mishti doi"
+  },
+  {
+    id: 'bandarban', name: "Bandarban", region: "Chittagong Hill Tracts",
+    emoji: "🏔️", badge: "Highest Peak",
+    desc: "Home to Bangladesh's highest peaks — Tahjindong and Keokradong. A trekker's paradise with stunning hill tribe villages.",
+    tags: ["trekking", "tribal", "mountains", "waterfall"],
+    categories: ["nature", "hill"],
+    rating: "⭐⭐⭐⭐⭐", season: "Nov – Mar",
+    bg: "linear-gradient(135deg, #1a472a, #57cc99)",
+    costPerDay: { budget: 1500, comfort: 3500, luxury: 7000 },
+    activities: [
+      { time: "6:00 AM", text: "<strong>Nilgiri Hills sunrise</strong> — at 2,200 ft, you're literally above the clouds. Most spectacular sunrise in Bangladesh" },
+      { time: "9:00 AM", text: "<strong>Trek to Chimbuk Hill</strong> — the third highest peak, passing Bawm and Marma tribal villages" },
+      { time: "12:00 PM", text: "Lunch at a <strong>local tribal homestay</strong> — taste bamboo shoot dishes and traditional food" },
+      { time: "2:00 PM", text: "<strong>Buddha Dhatu Jadi (Golden Temple)</strong> — massive golden Buddha overlooking the hills" },
+      { time: "5:00 PM", text: "<strong>Nafakhum Waterfall</strong> (1-day trek) — the largest waterfall in Bangladesh, a must for adventurers" },
+    ],
+    food: "🎋 Must try: Bamboo chicken, marma-style sticky rice, wild jungle honey"
+  },
+  {
+    id: 'paharpur', name: "Paharpur", region: "Rajshahi Division",
+    emoji: "🏛️", badge: "Buddhist Heritage",
+    desc: "Somapura Mahavihara — one of the greatest Buddhist monasteries in Asia, dating to the 8th century AD. A UNESCO World Heritage Site.",
+    tags: ["UNESCO", "Buddhist", "archaeology", "ancient"],
+    categories: ["history"],
+    rating: "⭐⭐⭐⭐", season: "Oct – Feb",
+    bg: "linear-gradient(135deg, #780000, #c1121f)",
+    costPerDay: { budget: 700, comfort: 1500, luxury: 3500 },
+    activities: [
+      { time: "9:00 AM", text: "<strong>Somapura Mahavihara</strong> — walk the ruins of one of Asia's greatest Buddhist universities (8th century)" },
+      { time: "11:00 AM", text: "<strong>Paharpur Museum</strong> — over 4,000 terracotta plaques, sculptures, and artifacts from the monastery" },
+      { time: "1:00 PM", text: "Lunch in Joypurhat town — try <strong>Rajshahi silk tea</strong> and local sweets" },
+      { time: "3:00 PM", text: "<strong>Varendra Research Museum</strong> in Rajshahi — oldest museum in Bangladesh with Hindu and Buddhist sculptures" },
+      { time: "5:00 PM", text: "<strong>Padma River bank</strong> in Rajshahi — beautiful evening walk with local boat rides" },
+    ],
+    food: "🍭 Must try: Rajshahi mango (in season), mishti doi, kali jira rice dishes"
+  }
+];
+
+let selectedDests = [];
+
+// ===== RENDER DESTINATIONS =====
+function renderDests(filter = 'all') {
+  const grid = document.getElementById('destGrid');
+  const filtered = filter === 'all' ? destinations : destinations.filter(d => d.categories.includes(filter));
+  grid.innerHTML = filtered.map(d => `
+    <div class="dest-card" data-id="${d.id}">
+      <div class="dest-img">
+        <div class="dest-img-inner" style="background: ${d.bg};">${d.emoji}</div>
+        <div class="dest-badge">${d.badge}</div>
+      </div>
+      <div class="dest-body">
+        <div class="dest-name">${d.name}</div>
+        <div class="dest-region">${d.region}</div>
+        <div class="dest-desc">${d.desc}</div>
+        <div class="dest-tags">${d.tags.map(t => `<span class="dest-tag">${t}</span>`).join('')}</div>
+        <div class="dest-meta">
+          <div>
+            <div class="dest-rating">${d.rating}</div>
+            <div class="dest-season" style="margin-top:4px;">🗓️ Best: ${d.season}</div>
+          </div>
+          <button class="add-btn ${selectedDests.find(s=>s.id===d.id) ? 'added' : ''}" 
+            onclick="toggleDest('${d.id}')" id="btn-${d.id}">
+            ${selectedDests.find(s=>s.id===d.id) ? '✓ Added' : '+ Add to Plan'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== TOGGLE DESTINATION =====
+function toggleDest(id) {
+  const dest = destinations.find(d => d.id === id);
+  const idx = selectedDests.findIndex(s => s.id === id);
+  if (idx > -1) {
+    selectedDests.splice(idx, 1);
+  } else {
+    selectedDests.push({ ...dest, days: 2 });
+    // Scroll to planner
+    setTimeout(() => document.getElementById('planner-section').scrollIntoView({ behavior: 'smooth' }), 300);
+  }
+  renderDests(currentFilter);
+  renderSelected();
+  updateSummary();
+}
+
+// ===== RENDER SELECTED =====
+function renderSelected() {
+  const list = document.getElementById('selectedList');
+  const empty = document.getElementById('emptyState');
+  if (selectedDests.length === 0) {
+    list.innerHTML = '<div class="empty-state" id="emptyState">← Add destinations from the cards above</div>';
+    return;
+  }
+  list.innerHTML = selectedDests.map((d, i) => `
+    <div class="selected-item">
+      <div class="selected-emoji">${d.emoji}</div>
+      <div class="selected-info">
+        <div class="selected-name">${d.name}</div>
+        <div class="selected-region">${d.region}</div>
+      </div>
+      <div class="selected-days">
+        <input class="days-input" type="number" min="1" max="14" value="${d.days}" 
+          onchange="updateDays(${i}, this.value)"> days
+      </div>
+      <button class="remove-btn" onclick="removeDest(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function updateDays(i, val) {
+  selectedDests[i].days = parseInt(val) || 1;
+  updateSummary();
+}
+
+function removeDest(i) {
+  const id = selectedDests[i].id;
+  selectedDests.splice(i, 1);
+  renderDests(currentFilter);
+  renderSelected();
+  updateSummary();
+}
+
+// ===== SUMMARY =====
+function updateSummary() {
+  const totalDays = selectedDests.reduce((s, d) => s + d.days, 0);
+  const style = document.getElementById('travelStyle').value;
+  const styleNames = { budget: 'Budget 💰', comfort: 'Comfort 🌟', luxury: 'Luxury 💎' };
+  const totalCost = selectedDests.reduce((s, d) => s + d.costPerDay[style] * d.days, 0);
+
+  document.getElementById('sumDest').textContent = selectedDests.length;
+  document.getElementById('sumDays').textContent = totalDays;
+  document.getElementById('sumStyle').textContent = styleNames[style] || 'Comfort';
+  document.getElementById('sumSeason').textContent = totalDays > 0 ? 'Oct–Mar ideal' : '—';
+
+  if (totalCost > 0) {
+    document.getElementById('sumBudget').textContent = '৳' + totalCost.toLocaleString();
+    document.getElementById('sumBudgetNote').textContent = `≈ $${Math.round(totalCost/110).toLocaleString()} USD for ${totalDays} days`;
+  } else {
+    document.getElementById('sumBudget').textContent = '—';
+    document.getElementById('sumBudgetNote').textContent = 'Add destinations to estimate';
+  }
+}
+
+document.getElementById('travelStyle').addEventListener('change', updateSummary);
+
+// ===== GENERATE ITINERARY =====
+function generateItinerary() {
+  if (selectedDests.length === 0) {
+    alert('Please add at least one destination!');
+    return;
+  }
+
+  const startDate = document.getElementById('startDate').value;
+  const style = document.getElementById('travelStyle').value;
+  const travelers = document.getElementById('travelers').value;
+  const transport = document.getElementById('transport').value;
+
+  // Title
+  const totalDays = selectedDests.reduce((s, d) => s + d.days, 0);
+  document.getElementById('itinTitle').textContent = `${totalDays}-Day Bangladesh ${style === 'luxury' ? 'Luxury' : style === 'budget' ? 'Budget' : 'Adventure'}`;
+  document.getElementById('itinSubtitle').textContent = `${travelers} · ${transport} · Visiting: ${selectedDests.map(d=>d.name).join(', ')}`;
+
+  // Build timeline
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '';
+
+  let dayNum = 1;
+  let currentDate = startDate ? new Date(startDate) : null;
+
+  selectedDests.forEach(dest => {
+    for (let d = 0; d < dest.days; d++) {
+      const dateStr = currentDate ? currentDate.toLocaleDateString('en-BD', { month: 'short', day: 'numeric' }) : '';
+      const isFirst = d === 0;
+      const isLast = d === dest.days - 1;
+
+      // Pick activities — rotate through them
+      const acts = dest.activities;
+      const dayActs = d === 0 ? acts.slice(0, 3) : d === 1 ? acts.slice(2, 5) : acts;
+
+      // Transport note
+      let transportNote = '';
+      if (isFirst && dayNum > 1) {
+        transportNote = `<div class="activity" style="border-left-color: var(--gold)">
+          <div class="activity-time">TRAVEL</div>
+          <div class="activity-text">🚌 Transfer to <strong>${dest.name}</strong> — ${transport}</div>
+        </div>`;
+      }
+
+      timeline.innerHTML += `
+        <div class="day-block">
+          <div class="day-number">
+            <div class="day-dot" style="${isFirst ? 'background:var(--red);box-shadow:0 0 0 2px var(--red)' : ''}"></div>
+            <div class="day-label">${dateStr || ('Day ' + dayNum)}</div>
+          </div>
+          <div class="day-content">
+            <div style="color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Day ${dayNum} · ${isFirst && dest.days > 1 ? 'Arrival & Explore' : isLast && dest.days > 1 ? 'Last Day' : 'Explore'}</div>
+            <div class="day-dest-name"><span class="day-dest-emoji">${dest.emoji}</span>${dest.name}</div>
+            <div class="day-activities">
+              ${transportNote}
+              ${dayActs.map(a => `
+                <div class="activity">
+                  <div class="activity-time">${a.time}</div>
+                  <div class="activity-text">${a.text}</div>
+                </div>
+              `).join('')}
+              <div class="food-tip">🍽️ <div><strong>Food Tip:</strong> ${dest.food}</div></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      dayNum++;
+      if (currentDate) { currentDate.setDate(currentDate.getDate() + 1); }
+    }
+  });
+
+  document.getElementById('itinerary-section').style.display = 'block';
+  setTimeout(() => document.getElementById('itinerary-section').scrollIntoView({ behavior: 'smooth' }), 100);
+}
+
+// ===== FILTERS =====
+let currentFilter = 'all';
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  currentFilter = btn.dataset.filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDests(currentFilter);
+});
+
+// ===== INIT =====
+renderDests();
+
+// Set default date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('startDate').value = today;
+</script>
+</body>
+</html>
